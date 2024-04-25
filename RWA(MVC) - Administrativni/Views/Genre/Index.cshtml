@@ -1,0 +1,12 @@
+﻿@model IEnumerable<RWA_MVC____2.Models.Genre>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Genre</h1>
+
+<div id="view-all">
+    @await Html.PartialAsync("_ViewAll",Model)
+</div>
+

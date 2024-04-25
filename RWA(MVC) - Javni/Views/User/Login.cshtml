@@ -1,0 +1,85 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<div class="login-container">
+    <img src="/Logo/logo_transparent.png" style="height: 300px; " />
+    <h1 class="Push">Login</h1>
+    <a asp-controller="User" asp-action="Register" class="btn btn-secondary mb-3">Don't have an account?</a>
+@model User
+
+<form asp-controller="User" asp-action="Login" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Email</label>
+        <input type="email" class="form-control" asp-for="Email">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Password</label>
+        <input type="password" class="form-control" asp-for="PwdHash" autocomplete="off">
+    </div>
+
+  
+
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+    
+</div>
+
+<style>
+   
+    .login-container {
+        position: absolute;
+       text-align:center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border:none !important;
+      width: 490px;
+        padding: 30px;
+        background: linear-gradient(to bottom left, rgb(0, 0, 0,0.85),rgb(0, 0, 0,0.5));
+        border-radius: 40px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+        color: #fff;
+    }
+
+    .form-label {
+        color: #fff; 
+    }
+
+    .form-control {
+        background-color: rgb(0,0,0,0.3); 
+        color: #fff; 
+        border: none !important;
+        border-radius:50px;
+    }
+    .btn{
+        border-radius: 50px !important;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        background-color:darkcyan;
+        color: #fff; 
+        border: none;
+
+    }
+
+    .btn-secondary {
+        background-color: darkslategray;
+    }
+
+    .btn-primary:hover {
+        background-color: green;
+        box-shadow: 0 0 50px green !important;
+    }
+
+    .btn-secondary:hover {
+        background-color: red;
+        box-shadow: 0 0 50px red !important;
+    }
+    
+
+</style>

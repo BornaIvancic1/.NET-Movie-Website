@@ -1,0 +1,112 @@
+﻿
+
+<style>
+  body{
+        min-height: 1130px;
+  }
+    .register-container {
+        position: absolute;
+        text-align: center;
+        top: 50%;
+        border: none !important;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 490px;
+        padding: 30px;
+        background: linear-gradient(to bottom left, rgb(0, 0, 0,0.85),rgb(0, 0, 0,0.5));
+        border-radius: 40px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+        color: #fff;
+    }
+
+    .btn {
+        border-radius: 50px !important;
+      
+    }
+    .form-label {
+        color: #fff; 
+    }
+
+    .form-control {
+        background-color: rgb(0,0,0,0.3); 
+        border: none !important;
+        color: #fff; 
+        border-radius: 50px !important;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        background-color: darkcyan; 
+        color: #fff; 
+        border: none;
+    }
+
+    .btn-secondary {
+        background-color: darkslategray; 
+    }
+
+    .btn-primary:hover {
+        background-color: green;
+        box-shadow: 0 0 50px green !important;
+    }
+
+    .btn-secondary:hover {
+        background-color: red;
+        box-shadow: 0 0 50px red !important;
+    }
+</style>
+
+<div class="register-container">
+    <img src="/Logo/logo_transparent.png" style="height: 300px; " />
+
+    <h1 class="Push">Register</h1>
+    <a asp-controller="User" asp-action="Login" class="btn btn-secondary green mb-3">Already have an account?</a>
+    @model User
+    <form asp-controller="User" asp-action="Register" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="mb-3">
+            <label for="" class="form-label">User Name</label>
+            <input type="text" class="form-control" asp-for="Username">
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">First Name</label>
+            <input type="text" class="form-control" asp-for="FirstName">
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Last Name</label>
+            <input type="text" class="form-control" asp-for="LastName">
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Email</label>
+            <input type="email" class="form-control" asp-for="Email">
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Phone</label>
+            <input type="tel" class="form-control" asp-for="Phone">
+        </div>
+
+        <div class="mb-3">
+            <label for="" class="form-label">Password</label>
+            <input type="text" class="form-control" asp-for="PwdHash" autocomplete="off">
+        </div>
+        <div class="mb-3">
+            <label for="" class="form-label">Country</label>
+            <select asp-for="CountryOfResidenceId" class="form-control">
+                <option value="">Select Country</option>
+                @foreach (var country in Model.Countries)
+                {
+                    <option value="@country.Id">@country.Name</option>
+                }
+            </select>
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

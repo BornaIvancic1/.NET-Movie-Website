@@ -1,0 +1,50 @@
+﻿@model User
+@{
+}
+
+<h1>Edit User</h1>
+<form method="post" action="View" class="mt-5">
+    <div class="mb-3">
+        <label for="" class="form-label">Id</label>
+        <input type="text" class="form-control" asp-for="Id" readonly>
+    </div> <div class="mb-3">
+        <label for="" class="form-label">User Name</label>
+        <input type="text" class="form-control" asp-for="Username">
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">First Name</label>
+        <input type="text" class="form-control" asp-for="FirstName">
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Last Name</label>
+        <input type="text" class="form-control" asp-for="LastName">
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Email</label>
+        <input type="email" class="form-control" asp-for="Email">
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Phone</label>
+        <input type="tel" class="form-control" asp-for="Phone">
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Password</label>
+        <input type="text" class="form-control" asp-for="PwdHash">
+    </div>
+
+    <div class="mb-3">
+        <label for="" class="form-label">Country Id</label>
+        <input type="number" class="form-control" asp-for="CountryOfResidenceId">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+    <button type="submit" class="btn btn-danger"
+    asp-action="Delete"
+    asp-controller="User"
+    >Delete</button>
+</form>

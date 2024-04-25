@@ -1,0 +1,156 @@
+﻿<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vibrant.js/2.1.0/Vibrant.min.js"></script>
+
+@{
+    ViewData["Title"] = "Video Details Page";
+}
+
+<h2 class="video-header text-center">
+    <span class="float-left">
+        <a href="@Url.Action("Index", "Video")" class="btn btn-danger back">
+            <i class="material-icons Arrow">arrow_back</i>
+        </a>
+    </span>
+</h2>
+
+<div id="video-details-container" class="video-details-container text-center" style="background: linear-gradient(rgba(0, 0, 0, 0.93), rgba(0, 0, 0, 0.93)), url('data:image/png;base64,@ViewData["ImageData"]'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+   
+    <div class="video-thumbnail">
+        <img id="video-thumbnail-img" src="data:image/png;base64,@ViewData["ImageData"]" alt="Video Image" class="img-fluid" />
+    </div>
+
+    <dl class="video-info">
+        <dt class="h5 text-green">Name:</dt>
+        <dd class="h3">@Model.Name</dd>
+        
+        <dt class="h5 text-green">Tags:</dt>
+        <dd class="h3">@ViewData["Tags"]</dd>
+
+        <dt class="h5 text-green">Description:</dt>
+        <dd class="h3">@Model.Description</dd>
+
+        <dt class="h5 text-green">Genre:</dt>
+        <dd class="h3">@ViewData["GenreName"]</dd>
+
+        <dt class="h5 text-green">Release date:</dt>
+        <dd class="h3">@Model.CreatedAt</dd>
+
+        <dt class="h5 text-green">Length in seconds:</dt>
+        <dd class="h3">@Model.TotalSeconds</dd>
+    </dl>
+
+    <div class="play-button">
+        <button type="button" class="btn btn-green btn-lg" onclick="playVideo('@Model.StreamingUrl')">
+            <i class="material-icons play">play_circle_filled</i> 
+        </button>
+    </div>
+</div>
+
+<script>
+    function playVideo(url) {
+        window.open(url, '_blank');
+    }
+
+    var base64ImageData = "@ViewData["ImageData"]";
+    var img = new Image();
+    img.onload = function () {
+        var vibrant = new Vibrant(img);
+        var swatches = vibrant.swatches();
+
+        if (swatches.hasOwnProperty("Vibrant")) {
+            var dominantColor = swatches["Vibrant"].getHex();
+            document.body.style.setProperty('background-color', dominantColor, 'important');
+        }
+    };
+    img.src = "data:image/png;base64," + base64ImageData;
+</script>
+
+<style>
+   
+  
+ .play{
+        vertical-align:middle;
+        font-size: 55px;
+    }
+     .Arrow{
+        vertical-align:middle;
+        font-size: 40px;
+    }
+    body {
+        background-color: #0a0a0a;
+        color: white;
+    }
+
+  
+    .video-header {
+        color: #00917C;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 50px;
+    }
+
+    .video-details-container {
+        background-color: #181818;
+        padding: 40px;
+        border-radius: 50px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .video-thumbnail img {
+        max-width: 500px;
+        max-height: 500px;
+        border-radius: 10px;
+        box-shadow: 0 0 90px #184D47;
+        transition: box-shadow 0.5s ease;
+    }
+
+    .video-thumbnail:hover img {
+        box-shadow: 0 0 90px rgba(0, 255, 255, 0.5); 
+    }
+
+
+    .video-info {
+        margin: 20px 0;
+        color: white;
+    }
+
+        .video-info .text-green {
+            color: #00917C;
+        }
+    .play-button button {
+        background-color: #00917C;
+        border-color: #00917C;
+        border-radius: 50px;
+   
+    }
+
+    .btn-danger {
+     
+        background-color: rgb(0,0,0,0.4);
+        border: none;
+        text-shadow: 0 0 30px rgb(0,0,0,0.9) !important;
+        box-shadow: 0 0 30px rgb(0,0,0,0.9) !important;
+        border-radius: 50px;
+        transition: box-shadow 0.5s ease, text-shadow 0.5s ease;
+    }
+
+    .btn-danger:hover {
+            text-shadow: 0 0 20px red !important;
+            box-shadow: 0 0 30px red !important;
+    }
+    .btn-green {
+        background-color: #00917C;
+      border:none;
+        text-shadow: 0 0 30px #184D47 !important;
+        box-shadow: 0 0 30px #184D47 !important;
+        transition: box-shadow 0.5s ease, text-shadow 0.5s ease;
+    }
+    .btn-green:hover{
+            background-color: green;
+            text-shadow: 0 0 40px green !important;
+            box-shadow: 0 0 50px green !important;
+    }
+</style>

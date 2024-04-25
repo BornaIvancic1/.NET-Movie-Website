@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "Account Page";
+}
+
+@model User
+<div class="text-center BlckBox">
+    <div class="texttt">
+    <h1 class="display-6 mb-3 pt-4"><span class="Bojatxt">Username: </span>@Model.Username</h1>
+    <h1 class="display-6 mb-3"><span class="Bojatxt">First Name: </span>@Model.FirstName</h1>
+    <h1 class="display-6 mb-3"><span class="Bojatxt">Last Name: </span>@Model.LastName</h1>
+    <h1 class="display-6 mb-3"><span class="Bojatxt">Email: </span>@Model.Email</h1>
+    <h1 class="display-6 mb-3"><span class="Bojatxt">Phone: </span>@Model.Phone</h1>
+    </div>
+</div>
+<div class="text-center changeer">
+<a asp-controller="User" asp-action="ChangePassword" class="btn btn-danger">Change Password</a>
+</div>
+<style>
+    h1{
+    
+        font-weight:400 !important;
+    }
+    .texttt{
+        padding-top:50px;
+    }
+    .Bojatxt {
+        color:darkcyan;
+        font-size:80%;
+        margin-right:15px;
+    }
+    .btn-danger{
+        display: inline-block;
+        background-color: rgb(0,0,0,0.4);
+        border: none;
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        border-radius: 50px;
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+        .btn-danger:hover{
+            transform:  scale(1.1);
+        }
+
+
+    .BlckBox {
+        transition: transform 0.3s ease; 
+    }
+
+        .BlckBox:hover {
+            transform: scale(0.95); 
+        }
+
+        .BlckBox h1 {
+            transition: font-size 0.5s ease;
+        }
+
+        .BlckBox:hover h1 {
+            font-size: 300%;
+        }
+
+        .BlckBox .texttt{
+            transition: padding-top 0.5s ease;
+        }
+            .BlckBox:hover .texttt {
+           padding-top  :30px;
+            }
+
+    .text-center.changeer{
+        margin-top:20px;
+    }
+         
+
+
+</style>

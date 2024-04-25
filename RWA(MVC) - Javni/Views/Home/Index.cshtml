@@ -1,0 +1,65 @@
+﻿@model X.PagedList.StaticPagedList<Video>
+@using X.PagedList.Mvc.Core
+
+
+
+
+<label for="filter">Filter: </label>
+<input type="text" id="filter" />
+
+<div id="content">
+   
+    @await Html.PartialAsync("GetData", Model)
+</div>
+
+
+
+<style>
+    .pagination a {
+        margin: 0 10px;
+    }
+</style>
+
+@section scripts {
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+          
+            function loadData(url) {
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    cache: false,
+                    success: function (result) {
+                        $('#content').html(result);
+                    }
+                });
+            }
+
+            function getFilter() {
+                return localStorage.getItem('filter') || '';
+            }
+
+            function setFilter(filterValue) {
+                localStorage.setItem('filter', filterValue);
+            }
+
+        
+            var filterValue = getFilter();
+            $('#filter').val(filterValue);
+            loadData('@Url.Action("GetData")?page=1&filter=' + filterValue);
+
+ 
+            $('#filter').on('input', function () {
+                setFilter($(this).val());
+                loadData('@Url.Action("GetData")?page=1&filter=' + getFilter());
+            });
+
+            $(document).on("click", ".pagination a", function () {
+                var url = $(this).attr("href");
+                url += '&filter=' + getFilter();
+                loadData(url);
+                return false;
+            });
+        });
+    </script>
+}

@@ -1,0 +1,55 @@
+﻿@model X.PagedList.StaticPagedList<Video>
+@using Microsoft.AspNetCore.Mvc.Core
+@using X.PagedList.Mvc.Core
+
+<h1>Videos</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Created At</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Genre Name</th>
+            <th>Total Seconds</th>
+            <th>Streaming Url</th>
+            <th>Image Id</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var video in Model)
+        {
+            <tr>
+                <td>@video.Id</td>
+                <td>@video.CreatedAt</td>
+                <td>@video.Name</td>
+                <td>@video.Description</td>
+                <td>
+                    @{
+                        var genres = ViewData["Genres"] as List<Genre>;
+                        var genre = genres?.FirstOrDefault(c => c.Id == video.GenreId);
+                    }
+                    @genre?.Name
+                </td>
+                <td>@video.TotalSeconds</td>
+                <td>@video.StreamingUrl</td>
+                <td>@video.ImageId</td>
+                <td><a href="Video/View/@video.Id" class="btn btn-dark">View</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="pagination" >
+    @Html.PagedListPager(Model, page => Url.Action("GetData", new { page }))
+  </div>
+<style>
+
+
+    .pagination a {
+        margin: 0 10px;
+        color: darkred;
+        text-decoration: none; 
+    }
+
+</style>

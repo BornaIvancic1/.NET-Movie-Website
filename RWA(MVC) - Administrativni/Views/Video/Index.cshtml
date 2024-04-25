@@ -1,0 +1,80 @@
+﻿@model X.PagedList.StaticPagedList<Video>
+@using X.PagedList.Mvc.Core
+
+
+
+
+<label for="filterVideo">Video Name Filter: </label>
+<input type="text" id="filterVideo" />
+
+<label for="filterGenre">Genre Name Filter: </label>
+<input type="text" id="filterGenre" />
+
+<a href="@Url.Action("Add", "Video")" class="btn btn-dark">Add Video</a>
+
+<div id="content">
+    
+    @await Html.PartialAsync("GetData", Model)
+</div>
+
+
+
+<style>
+    .pagination a {
+        margin: 0 10px;
+    }
+</style>
+
+@section scripts {
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            function loadData(url) {
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    cache: false,
+                    success: function (result) {
+                        $('#content').html(result);
+                    }
+                });
+            }
+
+            function getFilterVideo() {
+                return localStorage.getItem('filterVideo') || '';
+            }
+
+            function setFilterVideo(filterVideoValue) {
+                localStorage.setItem('filterVideo', filterVideoValue);
+            }
+
+            function getFilterGenre() {
+                return localStorage.getItem('filterGenre') || '';
+            }
+
+            function setFilterGenre(filterGenreValue) {
+                localStorage.setItem('filterGenre', filterGenreValue);
+            }
+
+            var filterVideoValue = getFilterVideo();
+            var filterGenreValue = getFilterGenre();
+
+            $('#filterVideo').val(filterVideoValue);
+            $('#filterGenre').val(filterGenreValue);
+
+            loadData('@Url.Action("GetData")?page=1&filterVideo=' + filterVideoValue + '&filterGenre=' + filterGenreValue);
+
+            $('#filterVideo, #filterGenre').on('input', function () {
+                setFilterVideo($('#filterVideo').val());
+                setFilterGenre($('#filterGenre').val());
+                loadData('@Url.Action("GetData")?page=1&filterVideo=' + getFilterVideo() + '&filterGenre=' + getFilterGenre());
+            });
+
+            $(document).on("click", ".pagination a", function () {
+                var url = $(this).attr("href");
+                url += '&filterVideo=' + getFilterVideo() + '&filterGenre=' + getFilterGenre();
+                loadData(url);
+                return false;
+            });
+        });
+    </script>
+}

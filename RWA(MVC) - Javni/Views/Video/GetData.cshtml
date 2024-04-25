@@ -1,0 +1,125 @@
+﻿@model X.PagedList.StaticPagedList<VideoViewModel>
+@using RWA_MVC_JAVNI.Models
+@using X.PagedList.Mvc.Core
+
+<h1 class="mb-4" style=" font-size: 36px; text-transform: uppercase; letter-spacing: 2px; border-bottom: 2px solid #00917C; padding-bottom: 10px;">Videos</h1>
+
+
+<div class="container-fluid data">
+    <div class="row">
+        @for (var i = 0; i < Model.Count; i += 3)
+        {
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body text-center">
+                        <a asp-action="Details" asp-route-id="@Model[i].Video.Id" class="video-link">
+                            <img src="data:image/png;base64,@Model[i].ImageData" class="img-fluid" alt="Video Thumbnail" />
+                            <p class="video-name">@Model[i].Video.Name</p>
+                            <p class="video-description">@Model[i].Video.Description</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            @if (i + 1 < Model.Count)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <a asp-action="Details" asp-route-id="@Model[i + 1].Video.Id" class="video-link">
+                                <img src="data:image/png;base64,@Model[i + 1].ImageData" class="img-fluid" alt="Video Thumbnail" />
+                                <p class="video-name">@Model[i + 1].Video.Name</p>
+                                <p class="video-description">@Model[i + 1].Video.Description</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @if (i + 2 < Model.Count)
+            {
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-body text-center">
+                            <a asp-action="Details" asp-route-id="@Model[i + 2].Video.Id" class="video-link">
+                                <img src="data:image/png;base64,@Model[i + 2].ImageData" class="img-fluid" alt="Video Thumbnail" />
+                                <p class="video-name">@Model[i + 2].Video.Name</p>
+                                <p class="video-description">@Model[i + 2].Video.Description</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+<div class="pagination">
+    @Html.PagedListPager(Model, page => Url.Action("GetData", new { page }))
+</div>
+
+<style>
+    .pagination a {
+        margin: 0 10px;
+        color: #00917C;
+        text-decoration: none; 
+    }
+
+    .pagination{
+        font-size: 25px;
+    }
+
+    .container-fluid.data{
+        background: rgba(0,0,0, 0.3);
+        padding-top:40px;
+        margin-bottom:20px;
+        border-radius:50px;
+        border:none;
+        box-shadow: 0 0 40px rgb(0,0,0,0.7);
+    }
+    img{
+        box-shadow: 0 0 20px rgb(0,0,0,0.7);
+        transition: transform 0.3s ease;
+    }
+    td, tr {
+        
+       text-align:center;
+        padding-top: 50px !important;
+        padding-bottom: 50px !important;
+        border: none; 
+    }
+
+ 
+    .video-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .video-name{
+        margin-top: 10px;
+        font-size: 25px !important;
+        font-weight:700;
+    }
+
+    .video-description {
+        margin-top: 5px;
+    }
+
+    .video-link:hover .video-description .video-name {
+        color: #00917C    ; 
+    }
+
+    img:hover {
+        transform: scale(1.05);
+    }
+    .card{
+        background:none !important;
+        border:none !important;
+    }
+
+    .img-fluid{
+        width:70%;
+    }
+
+</style>

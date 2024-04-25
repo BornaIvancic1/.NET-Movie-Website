@@ -1,0 +1,121 @@
+﻿@model X.PagedList.StaticPagedList<User>
+@using X.PagedList.Mvc.Core
+
+
+
+<label for="firstNameFilter">First Name: </label>
+<input type="text" id="firstNameFilter" />
+
+<label for="lastNameFilter">Last Name: </label>
+<input type="text" id="lastNameFilter" />
+
+<label for="usernameFilter">Username: </label>
+<input type="text" id="usernameFilter" />
+
+<label for="countryFilter">Country: </label>
+<input type="text" id="countryFilter" />
+
+<a href="@Url.Action("Add", "User")" class="btn btn-dark">Add User</a>
+
+
+<div id="content">
+  
+    @await Html.PartialAsync("GetData", Model)
+</div>
+
+<style>
+    .pagination a {
+        margin: 0 10px;
+    }
+   
+  
+</style>
+
+@section scripts {
+    <script language="javascript" type="text/javascript">
+        $(document).ready(function () {
+            function loadData(url) {
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    cache: false,
+                    success: function (result) {
+                        $('#content').html(result);
+                    }
+                });
+            }
+
+            function getFirstNameFilter() {
+                return localStorage.getItem('firstNameFilter') || '';
+            }
+
+            function setFirstNameFilter(value) {
+                localStorage.setItem('firstNameFilter', value);
+            }
+
+            function getLastNameFilter() {
+                return localStorage.getItem('lastNameFilter') || '';
+            }
+
+            function setLastNameFilter(value) {
+                localStorage.setItem('lastNameFilter', value);
+            }
+
+            function getUsernameFilter() {
+                return localStorage.getItem('usernameFilter') || '';
+            }
+
+            function setUsernameFilter(value) {
+                localStorage.setItem('usernameFilter', value);
+            }
+
+            function getCountryFilter() {
+                return localStorage.getItem('countryFilter') || '';
+            }
+
+            function setCountryFilter(value) {
+                localStorage.setItem('countryFilter', value);
+            }
+
+            var filterFirstNameValue = getFirstNameFilter();
+            var filterLastNameValue = getLastNameFilter();
+            var filterUsernameValue = getUsernameFilter();
+            var filterCountryValue = getCountryFilter();
+
+            $('#firstNameFilter').val(filterFirstNameValue);
+            $('#lastNameFilter').val(filterLastNameValue);
+            $('#usernameFilter').val(filterUsernameValue);
+            $('#countryFilter').val(filterCountryValue);
+
+            loadData('@Url.Action("GetData")?page=1&firstNameFilter=' + filterFirstNameValue
+                + '&lastNameFilter=' + filterLastNameValue
+                + '&usernameFilter=' + filterUsernameValue
+                + '&countryFilter=' + filterCountryValue
+            );
+
+            $('#firstNameFilter, #lastNameFilter, #usernameFilter, #countryFilter').on('input', function () {
+                setFirstNameFilter($('#firstNameFilter').val());
+                setLastNameFilter($('#lastNameFilter').val());
+                setUsernameFilter($('#usernameFilter').val());
+                setCountryFilter($('#countryFilter').val());
+
+                loadData('@Url.Action("GetData")?page=1&firstNameFilter=' + getFirstNameFilter()
+                    + '&lastNameFilter=' + getLastNameFilter()
+                    + '&usernameFilter=' + getUsernameFilter()
+                    + '&countryFilter=' + getCountryFilter()
+                );
+            });
+
+            $(document).on("click", ".pagination a", function () {
+                var url = $(this).attr("href");
+                url += '&firstNameFilter=' + getFirstNameFilter()
+                    + '&lastNameFilter=' + getLastNameFilter()
+                    + '&usernameFilter=' + getUsernameFilter()
+                    + '&countryFilter=' + getCountryFilter();
+                loadData(url);
+                return false;
+            });
+        });
+    </script>
+}
+
